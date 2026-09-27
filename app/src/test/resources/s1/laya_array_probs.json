@@ -1,0 +1,1 @@
+{"answers": {"department": {"type": "choice", "probabilities": [0.1, 0.8, 0.1]}, "urgency": {"type": "score", "distribution": [0.1, 0.2, 0.7]}, "churn_risk": {"type": "noul", "noul": 0.31}}, "routing": {"model": "multilingual", "repo": "convaiinnovations/laya-multilingual", "reason": "non-English text"}}

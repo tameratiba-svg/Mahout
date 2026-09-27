@@ -1,0 +1,10 @@
+: keepalive
+id: 1
+event: message
+data: {"jsonrpc":"2.0","method":"notifications/progress","params":{"progressToken":"p1","progress":50,"total":100}}
+
+event: message
+data: {"jsonrpc":"2.0",
+data:  "id":1,
+data: "result":{"content":[{"type":"text","text":"hello"}]}}
+

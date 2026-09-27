@@ -1,0 +1,24 @@
+data: {"id":"c2","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[{"index":0,"delta":{"role":"assistant","content":null},"finish_reason":null}]}
+
+data: {"id":"c2","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"id":"call_a1","type":"function","function":{"name":"action_notify","arguments":""}}]},"finish_reason":null}]}
+
+data: {"id":"c2","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"{\"tit"}}]},"finish_reason":null}]}
+
+data: {"id":"c2","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[{"index":0,"delta":{"tool_calls":[{"index":1,"id":"call_b2","type":"function","function":{"name":"data_http","arguments":""}}]},"finish_reason":null}]}
+
+data: {"id":"c2","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"le\":\"Hi \\"}}]},"finish_reason":null}]}
+
+data: {"id":"c2","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[{"index":0,"delta":{"tool_calls":[{"index":1,"function":{"arguments":"{\"url\":\"h"}}]},"finish_reason":null}]}
+
+data: {"id":"c2","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\"you\\\"\",\"text\":\"Song added\"}"}}]},"finish_reason":null}]}
+
+data: {"id":"c2","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[{"index":0,"delta":{"tool_calls":[{"index":1,"function":{"arguments":"ttps://example"}}]},"finish_reason":null}]}
+
+data: {"id":"c2","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[{"index":0,"delta":{"tool_calls":[{"index":1,"function":{"arguments":".com/a\",\"method\":\"GET\",\"timeout\":30,\"json\":true}"}}]},"finish_reason":null}]}
+
+data: {"id":"c2","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls"}]}
+
+data: {"id":"c2","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[],"usage":{"prompt_tokens":10,"completion_tokens":5,"total_tokens":15}}
+
+data: [DONE]
+

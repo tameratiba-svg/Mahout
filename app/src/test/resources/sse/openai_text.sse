@@ -1,0 +1,14 @@
+data: {"id":"c1","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+
+data: {"id":"c1","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[{"index":0,"delta":{"content":"Hello"},"finish_reason":null}]}
+
+data: {"id":"c1","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[{"index":0,"delta":{"content":" there, \"fri"},"finish_reason":null}]}
+
+data: {"id":"c1","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[{"index":0,"delta":{"content":"end\" — ünïcode."},"finish_reason":null}]}
+
+data: {"id":"c1","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
+
+data: {"id":"c1","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[],"usage":{"prompt_tokens":12,"completion_tokens":4,"total_tokens":16,"prompt_tokens_details":{"cached_tokens":2}}}
+
+data: [DONE]
+

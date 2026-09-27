@@ -1,0 +1,1 @@
+{"id":"m1","object":"chat.completion","model":"m","choices":[{"index":0,"message":{"role":"assistant","content":null,"tool_calls":[{"type":"function","function":{"name":"action_notify","arguments":"{\"title\":\"a\"}"}},{"id":"","type":"function","function":{"name":"data_http","arguments":"{\"url\":\"https://y\"}"}}]},"finish_reason":"tool_calls"}]}

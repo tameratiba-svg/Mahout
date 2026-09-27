@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Compose draws everything; the platform theme only supplies a no-action-bar base and the brand window background
+         (light #F7F4EC / night #0A1722 via values-night/colors.xml) so cold start never flashes white. -->
+    <style name="Theme.Mob8N" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/mahout_window_bg</item>
+        <item name="android:colorBackground">@color/mahout_window_bg</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">@bool/mahout_light_bars</item>
+    </style>
+</resources>

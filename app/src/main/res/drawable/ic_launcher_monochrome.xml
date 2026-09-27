@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <!-- Mahout themed-icon silhouette (API 33+): same art as ic_launcher_foreground in white; no eye and no dark edge outline (themed icons use alpha only).
+         ponytail: monochrome icon draws nodes/edges as a 0.4-alpha tone; upgrade = separate silhouette art -->
+    <group android:scaleX="0.13" android:scaleY="0.13" android:translateX="24.4" android:translateY="16.4">
+        <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.92" android:pathData="M212,150 C150,118 96,150 92,214 C88,280 132,330 196,318 C214,314 224,300 226,284 L226,176 Z" />
+        <path android:fillColor="#FFFFFFFF" android:pathData="M180,196 a92,92 0 1,0 184,0 a92,92 0 1,0 -184,0 Z" />
+        <path android:fillColor="#FFFFFFFF" android:pathData="M312,268 C338,262 352,250 356,240 L356,296 C356,312 344,320 330,318 L300,300 Z" />
+        <path android:strokeColor="#FFFFFFFF" android:strokeWidth="44" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M332,292 C336,330 330,366 312,396 C296,422 296,446 322,452" />
+        <path android:strokeColor="#FFFFFFFF" android:strokeAlpha="0.9" android:strokeWidth="12" android:strokeLineCap="round" android:pathData="M262,286 C270,306 288,316 306,314" />
+        <!-- workflow motif as a tone on the trunk -->
+        <path android:strokeColor="#FFFFFFFF" android:strokeAlpha="0.4" android:strokeWidth="6" android:strokeLineCap="round" android:pathData="M334,322 L320,380 M320,380 L344,434" />
+        <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.4" android:pathData="M318,322 a16,16 0 1,0 32,0 a16,16 0 1,0 -32,0 Z" />
+        <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.4" android:pathData="M304,380 a16,16 0 1,0 32,0 a16,16 0 1,0 -32,0 Z" />
+        <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.4" android:pathData="M328,434 a16,16 0 1,0 32,0 a16,16 0 1,0 -32,0 Z" />
+        <path android:strokeColor="#FFFFFFFF" android:strokeAlpha="0.4" android:strokeWidth="6" android:strokeLineCap="round" android:pathData="M150,300 C210,330 270,330 318,322" />
+    </group>
+</vector>

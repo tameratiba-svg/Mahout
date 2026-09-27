@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <files-path name="files" path="." />
+    <cache-path name="cache" path="." />
+    <!-- v4 (DESIGN4 §7.4): the coding workspace under getExternalFilesDir(null)/workspace; Share/Export is the only reliable way out
+         because Android/data is not browsable in the Files app on Android 11+. -->
+    <external-files-path name="workspace" path="workspace/" />
+</paths>

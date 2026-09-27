@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- API 26-30 auto-backup: the Claude API key lives in SharedPreferences "secrets" and must never leave the device. -->
+<full-backup-content>
+    <exclude domain="sharedpref" path="secrets.xml" />
+    <!-- DESIGN5 §7.4: on-device decision model bundle (deferred tier) never backed up. -->
+    <exclude domain="file" path="s1/" />
+</full-backup-content>

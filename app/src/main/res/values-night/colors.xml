@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- DESIGN6 §8.1: dark "night navy" background, matches DARK_ROLES background. -->
+    <color name="mahout_window_bg">#FF0A1722</color>
+    <bool name="mahout_light_bars">false</bool>
+</resources>

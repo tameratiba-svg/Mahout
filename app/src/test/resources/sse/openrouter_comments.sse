@@ -1,0 +1,18 @@
+: OPENROUTER PROCESSING
+
+: OPENROUTER PROCESSING
+
+data: {"id":"gen-1","object":"chat.completion.chunk","created":1,"model":"deepseek/deepseek-r2","choices":[{"index":0,"delta":{"role":"assistant","content":"","reasoning":"Think"},"finish_reason":null}]}
+
+data: {"id":"gen-1","object":"chat.completion.chunk","created":1,"model":"deepseek/deepseek-r2","choices":[{"index":0,"delta":{"content":"","reasoning":"ing hard."},"finish_reason":null}]}
+
+: OPENROUTER PROCESSING
+
+data: {"id":"gen-1","object":"chat.completion.chunk","created":1,"model":"deepseek/deepseek-r2","choices":[{"index":0,"delta":{"content":"Answer: 42"},"finish_reason":null}]}
+
+data: {"id":"gen-1","object":"chat.completion.chunk","created":1,"model":"deepseek/deepseek-r2","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
+
+data: {"id":"gen-1","object":"chat.completion.chunk","created":1,"model":"deepseek/deepseek-r2","choices":[],"usage":{"prompt_tokens":20,"completion_tokens":6,"total_tokens":26,"cost":0.00012}}
+
+data: [DONE]
+

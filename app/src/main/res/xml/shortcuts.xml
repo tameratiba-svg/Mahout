@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="slot1"
+        android:enabled="true"
+        android:icon="@drawable/ic_tile"
+        android:shortcutShortLabel="@string/shortcut_1"
+        android:shortcutLongLabel="@string/shortcut_1">
+        <intent
+            android:action="com.mob8n.SHORTCUT"
+            android:targetPackage="com.mob8n"
+            android:targetClass="com.mob8n.triggers.EntryActivity">
+            <extra android:name="slot" android:value="1" />
+        </intent>
+    </shortcut>
+    <shortcut
+        android:shortcutId="slot2"
+        android:enabled="true"
+        android:icon="@drawable/ic_tile"
+        android:shortcutShortLabel="@string/shortcut_2"
+        android:shortcutLongLabel="@string/shortcut_2">
+        <intent
+            android:action="com.mob8n.SHORTCUT"
+            android:targetPackage="com.mob8n"
+            android:targetClass="com.mob8n.triggers.EntryActivity">
+            <extra android:name="slot" android:value="2" />
+        </intent>
+    </shortcut>
+    <shortcut
+        android:shortcutId="slot3"
+        android:enabled="true"
+        android:icon="@drawable/ic_tile"
+        android:shortcutShortLabel="@string/shortcut_3"
+        android:shortcutLongLabel="@string/shortcut_3">
+        <intent
+            android:action="com.mob8n.SHORTCUT"
+            android:targetPackage="com.mob8n"
+            android:targetClass="com.mob8n.triggers.EntryActivity">
+            <extra android:name="slot" android:value="3" />
+        </intent>
+    </shortcut>
+    <shortcut
+        android:shortcutId="slot4"
+        android:enabled="true"
+        android:icon="@drawable/ic_tile"
+        android:shortcutShortLabel="@string/shortcut_4"
+        android:shortcutLongLabel="@string/shortcut_4">
+        <intent
+            android:action="com.mob8n.SHORTCUT"
+            android:targetPackage="com.mob8n"
+            android:targetClass="com.mob8n.triggers.EntryActivity">
+            <extra android:name="slot" android:value="4" />
+        </intent>
+    </shortcut>
+</shortcuts>

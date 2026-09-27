@@ -1,0 +1,23 @@
+{
+ "id": "ds1",
+ "object": "chat.completion",
+ "model": "deepseek-reasoner",
+ "choices": [
+  {
+   "index": 0,
+   "message": {
+    "role": "assistant",
+    "content": "Done.",
+    "reasoning_content": "First, check."
+   },
+   "finish_reason": "stop"
+  }
+ ],
+ "usage": {
+  "prompt_tokens": 15,
+  "completion_tokens": 9,
+  "total_tokens": 24,
+  "prompt_cache_hit_tokens": 5,
+  "prompt_cache_miss_tokens": 10
+ }
+}

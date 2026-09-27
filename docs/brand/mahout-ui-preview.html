@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mahout v6 Look</title>
+<meta name="description" content="Static look-and-feel preview for Mahout v6 (DESIGN6): dark phone chat, light tablet dashboard, Bypass variant, motion legend and tokens.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============ DESIGN6 tokens (§2, §3) ============ */
+:root{
+  --brand-navy:#0F2A3F; --brand-navy2:#123C4A; --brand-gold-l:#F6E7C8; --brand-gold:#E9C46A; --brand-teal:#7FD1C5;
+  /* signal (fixed, non-text) */
+  --sig-running:#3B7AC8; --sig-success:#298957; --sig-failed:#D14B44; --sig-suspended:#A26F0F; --sig-cancelled:#6D7B85;
+  /* motion */
+  --short1:90ms; --short2:150ms; --medium1:220ms; --medium2:300ms; --long1:380ms; --long2:600ms;
+  --caret:1000ms; --shimmer:1300ms; --pulse:1400ms; --flow:1200ms; --stagger:35ms;
+  --ease-standard:cubic-bezier(.2,0,0,1); --ease-decel:cubic-bezier(.05,.7,.1,1); --ease-accel:cubic-bezier(.3,0,.8,.15);
+  --ease-emphasis:cubic-bezier(.3,1.25,.5,1);
+  /* radii + spacing */
+  --r-xs:6px; --r-s:10px; --r-m:16px; --r-l:24px; --r-xl:32px;
+  --font:"Manrope",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  /* page chrome */
+  --page:#E9E5DB; --page-ink:#0F2A3F; --page-ink2:#46535D; --page-line:#D3CEC2;
+}
+.dark{
+  color-scheme:dark;
+  --bg:#0A1722; --s-lowest:#06111A; --s-low:#0E1E2B; --s:#122433; --s-high:#172B3C; --s-highest:#1C3346;
+  --on:#E4ECF0; --on-var:#A7B6C1; --outline:#71879A; --outline-var:#2A4356;
+  --primary:#7FD1C5; --on-primary:#00332D; --pc:#0F4F48; --on-pc:#A9F0E4;
+  --secondary:#E9C46A; --on-secondary:#3B2A00; --sc:#4D3B10; --on-sc:#F6E7C8;
+  --tc:#1F4A60; --on-tc:#D2E6F2;
+  --error:#FFB4AB; --on-error:#690005; --ec:#8C1D18; --on-ec:#FFDAD6;
+  --inverse:#E4ECF0; --on-inverse:#13232F;
+  --success:#7FD8A4; --success-c:#12432C; --on-success-c:#CDEFD9;
+  --warning:#F2C063; --warning-c:#4D3700; --on-warning-c:#FBE3B3;
+  --info:#A8C4F2; --info-c:#1B355C; --on-info-c:#D9E4F7;
+  --user:#1F4A55; --on-user:#F6E7C8; --card:#122433; --card-line:transparent;
+  --code:#06111A; --on-code:#D5E1E8; --caret-c:#7FD1C5;
+  --risk-read:#1C3346; --on-risk-read:#C9D6DE; --risk-write:#1B355C; --on-risk-write:#D9E4F7;
+  --risk-coding:#4D3700; --on-risk-coding:#FBE3B3; --risk-always:#5C1A16; --on-risk-always:#FFDAD6;
+}
+.light{
+  color-scheme:light;
+  --bg:#F7F4EC; --s-lowest:#FFFFFF; --s-low:#F2EFE6; --s:#ECE9DF; --s-high:#E6E3D9; --s-highest:#E0DDD3;
+  --on:#0F2A3F; --on-var:#46535D; --outline:#6E7B85; --outline-var:#C8C9C0;
+  --primary:#0B6B61; --on-primary:#FFFFFF; --pc:#C4EEE6; --on-pc:#00201C;
+  --secondary:#7A5900; --on-secondary:#FFFFFF; --sc:#F6E7C8; --on-sc:#2B1F00;
+  --tc:#D2E6F2; --on-tc:#0A2433;
+  --error:#B3261E; --on-error:#FFFFFF; --ec:#FADAD6; --on-ec:#410E0B;
+  --inverse:#132A3A; --on-inverse:#EDF1F3;
+  --success:#1E7A4F; --success-c:#CDEFD9; --on-success-c:#04311C;
+  --warning:#8A5A00; --warning-c:#FBE3B3; --on-warning-c:#2E1C00;
+  --info:#2F5FA8; --info-c:#D9E4F7; --on-info-c:#0B2350;
+  --user:#0F2A3F; --on-user:#F6E7C8; --card:#FFFFFF; --card-line:rgba(200,201,192,.6);
+  --code:#132A3A; --on-code:#E4ECF0; --caret-c:#0B6B61;
+  --risk-read:#E3E1D8; --on-risk-read:#2E3B45; --risk-write:#D9E4F7; --on-risk-write:#0B2350;
+  --risk-coding:#FBE3B3; --on-risk-coding:#4A3000; --risk-always:#FADAD6; --on-risk-always:#5F1410;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:var(--font); color:var(--page-ink); background:var(--page);
+  background-image:radial-gradient(rgba(15,42,63,.07) 1px,transparent 1px); background-size:22px 22px;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+.wrap{max-width:1440px;margin:0 auto;padding:40px 32px 72px}
+
+/* ============ header ============ */
+.hero{display:flex;gap:20px;align-items:center;margin-bottom:8px}
+.hero svg{width:64px;height:64px;flex:none;filter:drop-shadow(0 8px 18px rgba(15,42,63,.25))}
+.hero h1{font-size:30px;line-height:38px;font-weight:700;letter-spacing:-.4px;margin:0}
+.hero p{margin:4px 0 0;color:var(--page-ink2);font-size:15px;line-height:22px;max-width:760px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 34px}
+.chip-o{font:600 12px/16px var(--font);letter-spacing:.3px;padding:6px 12px;border-radius:999px;background:#F7F4EC;border:1px solid var(--page-line);color:var(--page-ink2)}
+.chip-o b{color:var(--page-ink)}
+
+.stage{display:flex;gap:44px;align-items:flex-start;justify-content:center}
+.col{display:flex;flex-direction:column;gap:14px;align-items:center}
+.caption{font:500 12px/18px var(--font);color:var(--page-ink2);max-width:411px;text-align:center}
+.caption b{color:var(--page-ink);font-weight:700}
+.label-top{font:700 11px/16px var(--font);letter-spacing:1.4px;text-transform:uppercase;color:var(--page-ink2);align-self:flex-start}
+
+/* ============ device frames ============ */
+.device{position:relative;background:#11161B;border-radius:44px;padding:10px;box-shadow:0 30px 60px -20px rgba(15,42,63,.45),0 0 0 1px rgba(255,255,255,.06) inset}
+.screen{position:relative;overflow:hidden;border-radius:34px;font-family:var(--font);color:var(--on);background:var(--bg)}
+.phone .screen{width:411px;height:914px}
+.tablet-scale{width:calc(1280px * var(--ts));height:calc(800px * var(--ts));--ts:.72}
+.tablet{width:1280px;height:800px;transform:scale(var(--ts));transform-origin:0 0;border-radius:38px;padding:14px}
+.tablet .screen{width:1252px;height:772px;border-radius:26px}
+
+.statusbar{height:28px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font:600 13px/1 var(--font);color:var(--on)}
+.statusbar .ic{display:flex;gap:6px;align-items:center}
+.statusbar svg{width:15px;height:15px;fill:currentColor}
+.gesture{position:absolute;left:50%;bottom:8px;width:120px;height:4px;border-radius:4px;background:var(--on);opacity:.45;transform:translateX(-50%)}
+
+/* shared bits */
+.i{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.i.s{width:18px;height:18px}
+.i.xs{width:14px;height:14px}
+.iconbtn{width:48px;height:48px;border-radius:999px;display:grid;place-items:center;color:var(--on-var);flex:none}
+.mono{font-family:var(--mono)}
+.brandmark{width:20px;height:20px;border-radius:999px;background:linear-gradient(135deg,var(--brand-navy),var(--brand-navy2));display:grid;place-items:center;flex:none;box-shadow:0 0 0 1px rgba(127,209,197,.25)}
+.brandmark svg{width:15px;height:15px}
+
+/* pills */
+.pill{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:var(--r-s);font:600 12px/16px var(--font);letter-spacing:.4px;white-space:nowrap}
+.pill .dot{width:8px;height:8px;border-radius:99px;background:currentColor}
+.risk-read{background:var(--risk-read);color:var(--on-risk-read)}
+.risk-write{background:var(--risk-write);color:var(--on-risk-write)}
+.risk-coding{background:var(--risk-coding);color:var(--on-risk-coding)}
+.risk-always{background:var(--risk-always);color:var(--on-risk-always)}
+.tone-info{background:var(--info-c);color:var(--on-info-c)}
+.tone-caution{background:var(--warning-c);color:var(--on-warning-c)}
+.tone-pos{background:var(--success-c);color:var(--on-success-c)}
+.tone-danger{background:var(--ec);color:var(--on-ec)}
+.tone-neutral{background:var(--s-highest);color:var(--on-var)}
+
+/* ============ PHONE / CHAT (dark) ============ */
+.chat{position:absolute;inset:0;display:flex;flex-direction:column;
+  background:radial-gradient(420px 300px at 100% 0%,rgba(127,209,197,.07),transparent 70%),var(--bg)}
+.topbar{height:64px;display:flex;align-items:center;gap:2px;padding:0 4px 0 4px}
+.topbar .t{flex:1;min-width:0;padding-left:2px}
+.topbar .t h2{margin:0;font:700 18px/24px var(--font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .t small{display:block;font:600 12px/16px var(--font);letter-spacing:.4px;color:var(--on-var)}
+.modechip{display:inline-flex;align-items:center;gap:4px;height:32px;padding:0 8px 0 10px;border-radius:var(--r-s);background:var(--info-c);color:var(--on-info-c);font:600 12px/16px var(--font);letter-spacing:.4px;margin-right:2px}
+.modechip .i{width:16px;height:16px}
+
+.thread{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;padding:4px 16px 12px;
+  mask-image:linear-gradient(to bottom,transparent 0,#000 28px)}
+.msg-user{align-self:flex-end;max-width:85%;background:var(--user);color:var(--on-user);border-radius:20px 20px 6px 20px;padding:10px 14px;font:400 15px/22px var(--font);letter-spacing:.15px}
+.msg-user em{font-style:normal;font-weight:600}
+.who{display:flex;align-items:center;gap:8px;font:600 11px/16px var(--font);letter-spacing:.5px;color:var(--on-var)}
+.answer{font:400 15px/23px var(--font);letter-spacing:.15px;color:var(--on)}
+.answer h4{margin:2px 0 4px;font:700 15px/22px var(--font);letter-spacing:.1px}
+.answer ul{margin:0 0 8px;padding-left:18px}
+.answer li{margin:2px 0}
+.answer li::marker{color:var(--primary)}
+.answer p{margin:0 0 8px}
+code.inl{font:400 12.5px/1 var(--mono);background:var(--s-highest);color:var(--on);padding:2px 5px;border-radius:var(--r-xs)}
+.codeblock{background:var(--code);color:var(--on-code);border-radius:var(--r-m);border:1px solid var(--outline-var);overflow:hidden;margin:6px 0 2px}
+.codeblock .hd{display:flex;align-items:center;justify-content:space-between;height:34px;padding:0 4px 0 12px;font:600 11px/16px var(--font);letter-spacing:.6px;color:var(--on-var);border-bottom:1px solid var(--outline-var)}
+.copy{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px;border-radius:var(--r-s);color:var(--primary);font:600 12px/16px var(--font)}
+.codeblock pre{margin:0;padding:10px 12px 12px;font:400 12.5px/19px var(--mono);white-space:pre;overflow:hidden}
+.k{color:#A9CBE0}.s{color:#E9C46A}.n{color:#7FD8A4}.p{color:#71879A}
+
+.tool{background:var(--s);border-radius:var(--r-m);padding:0 6px 0 10px}
+.tool .row{display:flex;align-items:center;gap:8px;min-height:44px}
+.tool .name{font:600 12.5px/16px var(--mono);color:var(--on)}
+.tool .kind{font:600 11px/16px var(--font);color:var(--on-var);letter-spacing:.4px}
+.tool .ms{margin-left:auto;font:600 11px/16px var(--font);color:var(--on-var);font-variant-numeric:tabular-nums}
+.tool .chev{color:var(--on-var)}
+.tool .body{padding:0 4px 10px 28px;display:grid;gap:6px}
+.tool .body .cap{font:600 10.5px/14px var(--font);letter-spacing:.5px;color:var(--on-var);text-transform:uppercase}
+.tool .lbl{font:600 11px/16px var(--font);letter-spacing:.5px;color:var(--on-var);text-transform:uppercase}
+.tool pre{margin:0;background:var(--code);color:var(--on-code);border-radius:var(--r-s);padding:8px 10px;font:400 11.5px/17px var(--mono);white-space:pre;overflow:hidden;-webkit-mask-image:linear-gradient(to right,#000 82%,transparent);mask-image:linear-gradient(to right,#000 82%,transparent)}
+.glyph{width:20px;height:20px;flex:none}
+
+.streaming{position:relative}
+.caret{display:inline-block;width:.5em;height:1.1em;vertical-align:-.2em;margin-left:2px;border-radius:3px;background:var(--caret-c);animation:blink var(--caret) linear infinite}
+@keyframes blink{0%,44%{opacity:1}56%,94%{opacity:0}100%{opacity:1}}
+
+/* approval dock */
+.dock{position:relative;background:var(--s-high);border-top-left-radius:var(--r-l);border-top-right-radius:var(--r-l);border-top:1px solid var(--outline-var);
+  box-shadow:0 -6px 18px rgba(0,0,0,.28);padding:12px 16px 12px 20px;animation:dockIn var(--medium2) var(--ease-emphasis) both}
+.dock::before{content:"";position:absolute;left:0;top:18px;bottom:14px;width:4px;border-radius:0 4px 4px 0;background:var(--risk-write);box-shadow:0 0 0 1px rgba(168,196,242,.35)}
+.dock .hd{display:flex;align-items:center;gap:8px;font:700 14px/20px var(--font);color:var(--on)}
+.dock .hd .ic{width:24px;height:24px;border-radius:99px;background:var(--sc);color:var(--secondary);display:grid;place-items:center}
+.dock .mode{margin:2px 0 10px 32px;font:500 12px/16px var(--font);color:var(--on-var)}
+.call{background:var(--s-highest);border-radius:var(--r-m);padding:10px 12px 12px}
+.call .top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.call .top .mono{font:600 12.5px/16px var(--mono)}
+.call .prev{margin:6px 0 8px;font:500 12.5px/18px var(--font);color:var(--on-var)}
+.call .prev b{color:var(--on);font-weight:600}
+.call .prev .mono{font-size:11.5px;color:var(--on)}
+.details{font:600 12px/16px var(--font);color:var(--primary);display:inline-flex;align-items:center;gap:2px}
+.btns{display:flex;gap:10px;align-items:center}
+.pb{height:44px;min-width:108px;padding:0 18px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 14px/20px var(--font);letter-spacing:.1px;border:0;cursor:pointer;
+  transition:transform var(--short1) var(--ease-standard)}
+.pb:active{transform:scale(.97)}
+.pb.primary{background:var(--primary);color:var(--on-primary)}
+.pb.outline{background:transparent;color:var(--on);box-shadow:inset 0 0 0 1px var(--outline)}
+.pb.danger{background:var(--error);color:var(--on-error)}
+.pb.danger-o{background:transparent;color:var(--error);box-shadow:inset 0 0 0 1px var(--error)}
+
+/* composer + slash popup */
+.composer{background:var(--s);border-top:1px solid var(--outline-var);padding:8px 10px 22px;position:relative}
+.slash{position:relative;margin:0 0 8px;background:var(--s-high);border-radius:var(--r-l);box-shadow:0 12px 30px rgba(0,0,0,.35),0 0 0 1px var(--outline-var);padding:6px;animation:rise var(--medium1) var(--ease-decel) both}
+.slash .it{display:flex;align-items:center;gap:12px;min-height:48px;padding:0 12px;border-radius:14px}
+.slash .it.on{background:var(--pc);color:var(--on-pc)}
+.slash .cmd{font:600 13px/18px var(--mono);min-width:64px}
+.slash .desc{font:500 12.5px/18px var(--font);color:var(--on-var)}
+.slash .it.on .desc{color:var(--on-pc);opacity:.85}
+.slash .args{margin-left:auto;display:flex;gap:4px}
+.slash .args span{font:600 10.5px/14px var(--mono);padding:3px 6px;border-radius:6px;background:rgba(0,0,0,.25)}
+.slash .args span.b{background:var(--ec);color:var(--on-ec)}
+.crow{display:flex;align-items:flex-end;gap:8px}
+.field{flex:1;min-height:48px;border-radius:var(--r-l);background:var(--s-highest);display:flex;align-items:center;padding:0 14px;font:400 15px/22px var(--font);color:var(--on)}
+.field .cur{display:inline-block;width:2px;height:20px;background:var(--primary);margin-left:1px;animation:blink 1000ms steps(1) infinite}
+.round{width:48px;height:48px;border-radius:999px;display:grid;place-items:center;flex:none}
+.round.tonal{background:var(--s-highest);color:var(--on-var)}
+.round.send{background:var(--primary);color:var(--on-primary)}
+.jump{position:absolute;right:14px;bottom:10px;width:40px;height:40px;border-radius:99px;background:var(--s-high);color:var(--on);display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+
+/* ============ TABLET / DASHBOARD (light) ============ */
+.dash{position:absolute;inset:0;display:flex;background:var(--bg)}
+.rail{width:88px;flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 0 18px;background:var(--bg)}
+.rail .logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--brand-navy),var(--brand-navy2));display:grid;place-items:center;margin:6px 0 18px}
+.rail .logo svg{width:34px;height:34px}
+.ri{display:flex;flex-direction:column;align-items:center;gap:4px;width:80px;font:600 12px/16px var(--font);letter-spacing:.4px;color:var(--on-var)}
+.ri .ind{position:relative;width:56px;height:32px;border-radius:16px;display:grid;place-items:center}
+.ri.on{color:var(--on)}
+.ri.on .ind{background:var(--sc);color:var(--on-sc)}
+.ri .badge{position:absolute;top:0;right:10px;min-width:16px;height:16px;border-radius:8px;background:var(--secondary);color:var(--on-secondary);font:700 10px/16px var(--font);text-align:center;padding:0 4px}
+.rail .spacer{flex:1}
+.main{flex:1;display:flex;flex-direction:column;min-width:0;border-left:1px solid var(--outline-var);
+  background:radial-gradient(700px 360px at 100% 0%,rgba(11,107,97,.06),transparent 70%),var(--bg)}
+.dtop{height:72px;display:flex;align-items:center;padding:0 16px 0 24px;gap:4px}
+.dtop h2{margin:0;font:700 22px/28px var(--font);flex:1}
+.dtop small{font:600 12px/16px var(--font);color:var(--on-var);letter-spacing:.4px;margin-left:12px}
+.grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:4px 24px 24px;align-content:start}
+.card{background:var(--card);border:1px solid var(--card-line);border-radius:var(--r-m);padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0;
+  transition:transform var(--short1) var(--ease-standard),box-shadow var(--short2) var(--ease-standard)}
+.card:hover{box-shadow:0 6px 20px -8px rgba(15,42,63,.18)}
+.card:active{transform:scale(.97)}
+.card .ct{display:flex;align-items:center;gap:8px;font:600 16px/24px var(--font)}
+.card .ct .i{color:var(--primary)}
+.card .ct .more{margin-left:auto;color:var(--on-var)}
+.seg{display:flex;height:32px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--outline);overflow:hidden;font:600 12px/16px var(--font)}
+.seg span{flex:1;display:grid;place-items:center;color:var(--on-var)}
+.seg span+span{box-shadow:inset 1px 0 0 var(--outline)}
+.seg span.on{background:var(--sc);color:var(--on-sc)}
+.big{font:700 34px/40px var(--font);letter-spacing:-.4px;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:8px}
+.big small{font:600 13px/18px var(--font);color:var(--on-var);letter-spacing:.2px}
+.sub{font:500 13px/18px var(--font);color:var(--on-var)}
+.legend{display:flex;gap:14px;font:600 11px/16px var(--font);color:var(--on-var)}
+.legend i{display:inline-block;width:10px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}
+.spark{width:100%;height:64px}
+.spark .tot{stroke:var(--primary);stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:420;stroke-dashoffset:420;animation:draw var(--long2) var(--ease-standard) .25s forwards}
+.spark .fail{stroke:var(--sig-failed);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:420;stroke-dashoffset:420;animation:draw var(--long2) var(--ease-standard) .4s forwards}
+.spark .area{fill:url(#sparkfill);opacity:0;animation:fadein var(--long2) var(--ease-standard) .5s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fadein{to{opacity:1}}
+.rows{display:flex;flex-direction:column}
+.wr{display:flex;align-items:center;gap:10px;min-height:40px;border-top:1px solid var(--outline-var);font:500 13px/18px var(--font)}
+.wr:first-child{border-top:0}
+.wr .nm{font-weight:600;color:var(--on);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wr .meta{color:var(--on-var);font-variant-numeric:tabular-nums;white-space:nowrap}
+.wr .meta.bad{color:var(--error);font-weight:600}
+.sd{width:9px;height:9px;border-radius:99px;flex:none}
+.urow{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:8px 0;border-top:1px solid var(--outline-var);font:500 12.5px/18px var(--font)}
+.urow:first-of-type{border-top:0}
+.urow b{font-weight:600}
+.urow .num{color:var(--on-var);font-variant-numeric:tabular-nums;grid-column:1/-1}
+.urow .cost{font-weight:700;font-variant-numeric:tabular-nums}
+.mchips{display:flex;gap:6px;flex-wrap:wrap}
+.mchips span{font:600 11px/16px var(--font);padding:4px 8px;border-radius:var(--r-s);background:var(--s-high);color:var(--on-var)}
+.kv{display:flex;justify-content:space-between;align-items:center;font:500 13px/18px var(--font);color:var(--on-var);min-height:28px}
+.kv b{color:var(--on);font-weight:600}
+.sk{height:12px;border-radius:6px;background:linear-gradient(90deg,var(--s-high) 0%,var(--s) 40%,var(--s-high) 80%);background-size:300% 100%;animation:shimmer var(--shimmer) linear infinite}
+@keyframes shimmer{from{background-position:100% 0}to{background-position:-50% 0}}
+.cardfoot{display:flex;gap:8px;align-items:center;margin-top:auto;padding-top:4px}
+.textbtn{font:600 13px/18px var(--font);color:var(--primary);padding:8px 6px}
+
+/* bypass inset */
+.inset{align-self:flex-start;width:560px;border-radius:24px;overflow:hidden;box-shadow:0 20px 40px -18px rgba(15,42,63,.45),0 0 0 1px rgba(15,42,63,.08)}
+.inset .screen{border-radius:0;background:var(--bg)}
+.banner svg{color:var(--on-ec)}
+.banner{display:flex;align-items:center;gap:10px;min-height:52px;padding:6px 6px 6px 16px;background:var(--ec);color:var(--on-ec);font:500 14px/20px var(--font)}
+.banner .cd{font-weight:700;font-variant-numeric:tabular-nums}
+.banner .stop{margin-left:auto;height:44px;padding:0 16px;border-radius:999px;display:grid;place-items:center;font:700 14px/20px var(--font);color:var(--on-ec)}
+.inset .body{display:flex;gap:14px;padding:16px}
+.card.dangerc{background:var(--ec);color:var(--on-ec);border-color:transparent}
+.card.dangerc .sub{color:var(--on-ec);opacity:.9}
+.card.dangerc .ct .i{color:var(--on-ec)}
+
+/* ============ motion legend ============ */
+h3.sec{font:700 20px/28px var(--font);letter-spacing:-.2px;margin:64px 0 6px}
+p.sec{margin:0 0 20px;color:var(--page-ink2);font:500 14px/21px var(--font);max-width:860px}
+.legendbar{display:flex;gap:12px;align-items:center;margin:0 0 18px;flex-wrap:wrap}
+.btn-page{font:600 13px/18px var(--font);height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--page-line);background:#F7F4EC;color:var(--page-ink);cursor:pointer}
+.btn-page:focus-visible{outline:2px solid #0B6B61;outline-offset:2px}
+label.rm{display:inline-flex;gap:8px;align-items:center;font:600 13px/18px var(--font);color:var(--page-ink2)}
+.tiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.tile{background:#FBFAF6;border:1px solid var(--page-line);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.tile h5{margin:0;font:700 14px/20px var(--font)}
+.tile .demo{height:170px;border-radius:14px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.tile .tok{display:flex;flex-wrap:wrap;gap:6px}
+.tile .tok span{font:600 11px/15px var(--mono);padding:3px 7px;border-radius:7px;background:#EDE9DF;color:#46535D}
+.tile p{margin:0;font:500 12px/17px var(--font);color:var(--page-ink2)}
+
+.d-caret{font:400 15px/23px var(--font);padding:0 18px;color:var(--on)}
+.d-entry{flex-direction:column;align-items:stretch;justify-content:flex-end;gap:8px;padding:14px}
+.d-entry .b{opacity:0;transform:translateY(12px);animation:entry 3.2s var(--ease-decel) infinite}
+.d-entry .b.u{align-self:flex-end;background:var(--user);color:var(--on-user);border-radius:16px 16px 5px 16px;padding:8px 12px;font:500 13px/18px var(--font)}
+.d-entry .b.a{font:400 13px/18px var(--font);color:var(--on)}
+.d-entry .b.t{background:var(--s);border-radius:12px;padding:8px 10px;font:600 11.5px/16px var(--mono);color:var(--on);display:flex;gap:8px;align-items:center}
+.d-entry .b:nth-child(1){animation-delay:0ms}.d-entry .b:nth-child(2){animation-delay:calc(var(--stagger)*1 + 350ms)}.d-entry .b:nth-child(3){animation-delay:calc(var(--stagger)*2 + 700ms)}
+@keyframes entry{0%{opacity:0;transform:translateY(12px)}7%{opacity:1;transform:none}85%{opacity:1;transform:none}95%,100%{opacity:0;transform:none}}
+.d-press .card{width:78%;animation:press 2.4s var(--ease-standard) infinite;cursor:pointer}
+.d-press .card:hover{animation-play-state:paused}
+@keyframes press{0%,40%{transform:scale(1)}46%{transform:scale(.97)}58%,100%{transform:scale(1)}}
+.d-sheet{align-items:flex-end;justify-content:stretch}
+.d-sheet .mini{width:100%;background:var(--s-high);border-radius:18px 18px 0 0;padding:12px 12px 14px;box-shadow:0 -6px 16px rgba(0,0,0,.3);animation:sheet 3.2s var(--ease-emphasis) infinite;position:relative}
+.d-sheet .mini::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:0 3px 3px 0;background:var(--risk-coding)}
+.d-sheet .mini .h{font:700 12.5px/18px var(--font);color:var(--on);margin-bottom:8px}
+.d-sheet .mini .bb{display:flex;gap:8px}
+.d-sheet .mini .bb span{height:30px;border-radius:99px;display:grid;place-items:center;padding:0 14px;font:600 12px/16px var(--font)}
+@keyframes sheet{0%{transform:translateY(105%)}10%{transform:none}80%{transform:none}90%,100%{transform:translateY(105%)}}
+.d-glyph{flex-direction:column;gap:10px}
+.gl{position:relative;width:44px;height:44px}
+.gl>*{position:absolute;inset:0;opacity:0}
+.gl .g1{animation:g1 4.8s infinite}.gl .g2{animation:g2 4.8s infinite}.gl .g3{animation:g3 4.8s infinite}
+.gl .g2 svg{animation:spin 900ms linear infinite}
+@keyframes g1{0%,30%{opacity:1;transform:scale(1)}34%,100%{opacity:0;transform:scale(.6)}}
+@keyframes g2{0%,30%{opacity:0;transform:scale(.6)}34%,63%{opacity:1;transform:scale(1)}67%,100%{opacity:0;transform:scale(.6)}}
+@keyframes g3{0%,63%{opacity:0;transform:scale(.6)}68%,96%{opacity:1;transform:scale(1)}100%{opacity:0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.glabel{font:600 12px/16px var(--mono);color:var(--on);position:relative;height:16px;width:120px;text-align:center}
+.glabel span{position:absolute;inset:0;opacity:0}
+.glabel span:nth-child(1){animation:g1 4.8s infinite}.glabel span:nth-child(2){animation:g2 4.8s infinite}.glabel span:nth-child(3){animation:g3 4.8s infinite}
+
+/* ============ tokens ============ */
+.tokgrid{display:grid;grid-template-columns:1.35fr 1fr;gap:20px}
+.panel{background:#FBFAF6;border:1px solid var(--page-line);border-radius:20px;padding:18px}
+.panel h5{margin:0 0 12px;font:700 14px/20px var(--font)}
+.sw{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.swatch{border-radius:12px;overflow:hidden;border:1px solid rgba(15,42,63,.1);font:600 10.5px/14px var(--font)}
+.swatch .c{height:54px;display:flex;align-items:flex-end;padding:6px 7px;font:700 11px/14px var(--font)}
+.swatch .m{padding:6px 7px;background:#fff;color:#46535D}
+.swatch .m b{display:block;color:#0F2A3F;font-weight:700;overflow-wrap:anywhere}
+.typespec{display:flex;flex-direction:column;gap:8px}
+.typespec div{display:flex;align-items:baseline;gap:14px;border-top:1px solid var(--page-line);padding-top:8px}
+.typespec div:first-child{border-top:0;padding-top:0}
+.typespec small{width:120px;flex:none;font:600 11px/15px var(--mono);color:#46535D}
+.scale{display:flex;gap:10px;align-items:flex-end;margin-top:6px}
+.scale div{background:#0B6B61;border-radius:3px;width:14px}
+.radii{display:flex;gap:12px;align-items:center;margin-top:14px}
+.radii div{width:72px;height:56px;background:#E6E3D9;border:1.5px solid #6E7B85}
+.foot{margin-top:40px;font:500 12px/18px var(--font);color:var(--page-ink2)}
+
+/* responsive: stack on narrower screens */
+@media (max-width:1420px){.tablet-scale{--ts:.6}}
+@media (max-width:1240px){.stage{flex-direction:column;align-items:center}.tablet-scale{--ts:.62}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.tokgrid{grid-template-columns:1fr}}
+@media (max-width:860px){.wrap{padding:24px 16px 56px}.tablet-scale{--ts:.42}.phone{transform:scale(.8);transform-origin:top center;margin-bottom:-180px}.inset{width:100%}.tiles{grid-template-columns:1fr}.sw{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:520px){.tablet-scale{--ts:.27}.phone{transform:scale(.78)}}
+
+/* reduced motion: every animation degrades to its static frame (DESIGN6 §3.3) */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .spark .tot,.spark .fail{stroke-dashoffset:0}.spark .area{opacity:1}
+  .d-entry .b{opacity:1;transform:none}.gl .g3,.glabel span:nth-child(3){opacity:1}
+}
+body.reduced *,body.reduced *::before,body.reduced *::after{animation:none!important;transition:none!important}
+body.reduced .spark .tot,body.reduced .spark .fail{stroke-dashoffset:0}
+body.reduced .spark .area{opacity:1}
+body.reduced .d-entry .b{opacity:1;transform:none}
+body.reduced .gl .g3,body.reduced .glabel span:nth-child(3){opacity:1}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="lg-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0F2A3F"/><stop offset="1" stop-color="#123C4A"/></linearGradient>
+    <linearGradient id="lg-ink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6E7C8"/><stop offset="1" stop-color="#E9C46A"/></linearGradient>
+    <symbol id="mark" viewBox="80 110 300 360">
+      <path d="M212 150 C150 118 96 150 92 214 C88 280 132 330 196 318 C214 314 224 300 226 284 L226 176 Z" fill="url(#lg-ink)" opacity="0.92"/>
+      <circle cx="272" cy="196" r="92" fill="url(#lg-ink)"/>
+      <path d="M312 268 C338 262 352 250 356 240 L356 296 C356 312 344 320 330 318 L300 300 Z" fill="url(#lg-ink)"/>
+      <path d="M332 292 C336 330 330 366 312 396 C296 422 296 446 322 452" fill="none" stroke="url(#lg-ink)" stroke-width="44" stroke-linecap="round"/>
+      <path d="M262 286 C270 306 288 316 306 314" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" opacity="0.9"/>
+      <circle cx="300" cy="184" r="15" fill="#0F2A3F"/><circle cx="306" cy="179" r="4" fill="#F6E7C8"/>
+      <path d="M334 322 L320 380 M320 380 L344 434" fill="none" stroke="#0F2A3F" stroke-width="12" stroke-linecap="round"/>
+      <path d="M334 322 L320 380 M320 380 L344 434" fill="none" stroke="#7FD1C5" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="334" cy="322" r="16" fill="#7FD1C5" stroke="#0F2A3F" stroke-width="6"/><circle cx="320" cy="380" r="16" fill="#7FD1C5" stroke="#0F2A3F" stroke-width="6"/><circle cx="344" cy="434" r="16" fill="#7FD1C5" stroke="#0F2A3F" stroke-width="6"/>
+    </symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></symbol>
+    <symbol id="i-tune" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 9V6.5A2.5 2.5 0 0 0 12.5 4h-6A2.5 2.5 0 0 0 4 6.5v6A2.5 2.5 0 0 0 6.5 15H9"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M5 12h12M12 6l6 6-6 6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-hand" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z"/><path d="M12 8v5M12 16h.01"/></symbol>
+    <symbol id="i-dash" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="9" rx="2"/><rect x="13" y="4" width="7" height="5" rx="2"/><rect x="13" y="11" width="7" height="9" rx="2"/><rect x="4" y="15" width="7" height="5" rx="2"/></symbol>
+    <symbol id="i-flow" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8.5 6.5C13 7 14 9 15.6 11M8.5 17.5c4.5-.5 5.5-2.5 7.1-4.5"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M5 5h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H10l-4 3v-3H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></symbol>
+    <symbol id="i-cap" viewBox="0 0 24 24"><path d="M3 9l9-4 9 4-9 4z"/><path d="M7 11v4c0 1.5 2.2 3 5 3s5-1.5 5-3v-4"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8"/></symbol>
+    <symbol id="i-bot" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></symbol>
+    <symbol id="i-runs" viewBox="0 0 24 24"><path d="M4 19V5M4 19h16"/><path d="M7 15l4-5 3 3 5-7"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/></symbol>
+    <symbol id="i-host" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="7" rx="2"/><rect x="4" y="13" width="16" height="7" rx="2"/><path d="M8 7.5h.01M8 16.5h.01"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><path d="M12 6h.01M12 12h.01M12 18h.01"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></symbol>
+    <symbol id="g-done" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8.5" fill="#298957"/><path d="M6 10.3l2.7 2.6L14 7.6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="g-pending" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.5" fill="none" stroke="#71879A" stroke-width="2"/></symbol>
+    <symbol id="g-run" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.5" fill="none" stroke="#2A4356" stroke-width="2"/><path d="M10 2.5a7.5 7.5 0 0 1 7.5 7.5" fill="none" stroke="#7FD1C5" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header class="hero">
+    <svg viewBox="0 0 512 512" role="img" aria-label="Mahout logo"><rect width="512" height="512" rx="112" fill="url(#lg-bg)"/><use href="#mark" x="80" y="110" width="300" height="360" transform="translate(0,0)"/></svg>
+    <div>
+      <h1>Mahout v6 — look &amp; feel</h1>
+      <p>Calm night-navy and warm paper, teal for action, gold for <i>your</i> decisions. Every colour, radius and timing on this page is a token from <b>docs/DESIGN6.md</b>, so what you judge here is what the Compose code will draw.</p>
+    </div>
+  </header>
+  <div class="chips">
+    <span class="chip-o">Type <b>Manrope</b> + <b>JetBrains Mono</b> · SIL OFL 1.1</span>
+    <span class="chip-o">Text contrast <b>≥ 4.5:1</b> (asserted by test)</span>
+    <span class="chip-o">Radii <b>6 · 10 · 16 · 24 · 32</b></span>
+    <span class="chip-o">Motion <b>90 / 150 / 220 / 300 / 380 / 600 ms</b></span>
+    <span class="chip-o">Stream frame <b>40 ms</b></span>
+    <span class="chip-o">Reduce motion <b>honoured</b></span>
+  </div>
+
+  <div class="stage">
+    <!-- ================= PHONE: Chat, dark ================= -->
+    <div class="col">
+      <div class="label-top">Phone · 411 × 914 dp · Chat · dark</div>
+      <div class="device phone">
+        <div class="screen dark" role="img" aria-label="Chat screen in dark mode mid-conversation">
+          <div class="chat">
+            <div class="statusbar"><span>9:41</span><span class="ic"><svg viewBox="0 0 24 24"><path d="M2 18h3v3H2zM7 14h3v7H7zM12 10h3v11h-3zM17 6h3v15h-3z"/></svg><svg viewBox="0 0 24 24"><path d="M3 8a14 14 0 0 1 18 0l-2 2a11 11 0 0 0-14 0zM7 12a8 8 0 0 1 10 0l-2 2a5 5 0 0 0-6 0zM12 16l2 2-2 2-2-2z"/></svg><svg viewBox="0 0 24 24"><rect x="3" y="7" width="16" height="10" rx="2.5"/><rect x="20" y="10" width="2" height="4" rx="1"/></svg></span></div>
+
+            <div class="topbar">
+              <span class="iconbtn" aria-label="Open chat list"><svg class="i"><use href="#i-menu"/></svg></span>
+              <div class="t"><h2>Morning digest keeps failing</h2><small>MiniMax · MiniMax-M2.7</small></div>
+              <span class="modechip" aria-label="Permission mode Ask, change"><svg class="i xs" style="width:14px;height:14px"><use href="#i-shield"/></svg>Ask<svg class="i"><use href="#i-down"/></svg></span>
+              <span class="iconbtn" aria-label="Chat settings"><svg class="i"><use href="#i-tune"/></svg></span>
+            </div>
+
+            <div class="thread">
+              <div class="msg-user">Why did <em>Morning digest</em> fail twice?</div>
+
+              <div class="who"><span class="brandmark"><svg viewBox="80 110 300 360"><use href="#mark" x="80" y="110" width="300" height="360"/></svg></span>Mahout · M2.7</div>
+
+                            <div class="tool">
+                <div class="row"><svg class="glyph"><use href="#g-done"/></svg><span class="name">get_workflow</span><span class="kind">workflow</span><span class="ms">output · 0.2 s</span><svg class="i s chev"><use href="#i-up"/></svg></div>
+                <div class="body">
+<pre><span class="p">{</span> <span class="k">"node"</span>: <span class="s">"data.http"</span>, <span class="k">"status"</span>: <span class="s">"TIMEOUT"</span>, <span class="k">"ms"</span>: <span class="n">30000</span> <span class="p">}</span></pre>
+                </div>
+              </div>
+
+              <div class="answer">
+                <h4>What happened</h4>
+                <ul>
+                  <li>The <b>HTTP</b> step timed out at 30 s on both runs.</li>
+                  <li>The feed moved to <code class="inl">/v2/digest</code>.</li>
+                </ul>
+                <div class="codeblock">
+                  <div class="hd"><span>JSON · data.http</span><span class="copy"><svg class="i s"><use href="#i-copy"/></svg>Copy</span></div>
+<pre><span class="p">{</span> <span class="k">"url"</span>: <span class="s">"…/v2/digest"</span>, <span class="k">"timeoutMs"</span>: <span class="n">60000</span> <span class="p">}</span></pre>
+                </div>
+              </div>
+
+              <div class="answer streaming">Saving the fix so you can review it<span class="caret" aria-hidden="true"></span></div>
+            </div>
+
+            <div class="dock" role="group" aria-label="Wants to run save_workflow">
+              <div class="hd"><span class="ic"><svg class="i xs" style="width:14px;height:14px"><use href="#i-hand"/></svg></span>Wants to run save_workflow</div>
+              <div class="mode">Mode: Ask — safe, coding and destructive actions ask.</div>
+              <div class="call">
+                <div class="top"><span class="pill risk-write">safe action · asks (ask)</span><span class="mono">save_workflow</span></div>
+                <div class="prev"><span class="mono">data.http</span> url → …/v2/digest · timeout 60 s &nbsp;<span class="details">Details<svg class="i xs" style="width:14px;height:14px"><use href="#i-down"/></svg></span></div>
+                <div class="btns"><button class="pb primary" aria-label="Approve save_workflow">Approve</button><button class="pb outline" aria-label="Deny save_workflow">Deny</button></div>
+              </div>
+            </div>
+
+            <div class="composer">
+              <div class="slash" role="listbox" aria-label="Slash commands">
+                <div class="it on"><span class="cmd">/mode</span><span class="desc">Set mode</span><span class="args"><span>ask</span><span>auto</span><span>plan</span><span class="b">bypass</span></span></div>
+                <div class="it"><span class="cmd">/new</span><span class="desc">Start a fresh chat</span></div>
+                <div class="it"><span class="cmd">/run</span><span class="desc">Run a workflow now</span></div>
+              </div>
+              <div class="crow">
+                <span class="round tonal" aria-label="Attach"><svg class="i"><use href="#i-plus"/></svg></span>
+                <div class="field">/mo<span class="cur"></span></div>
+                <span class="round send" aria-label="Send"><svg class="i"><use href="#i-send"/></svg></span>
+              </div>
+            </div>
+            <div class="gesture"></div>
+          </div>
+        </div>
+      </div>
+      <div class="caption"><b>Composite for review:</b> streaming caret, approval dock and slash popup are shown together. In the app the dock replaces the composer while a call awaits your decision.</div>
+    </div>
+
+    <!-- ================= TABLET: Dashboard, light ================= -->
+    <div class="col">
+      <div class="label-top">Tablet · 1280 × 800 dp (scaled) · Dashboard · light</div>
+      <div class="tablet-scale">
+        <div class="device tablet">
+          <div class="screen light" role="img" aria-label="Dashboard in light mode on a tablet">
+            <div class="dash">
+              <nav class="rail" aria-label="Destinations">
+                <div class="logo"><svg viewBox="80 110 300 360"><use href="#mark" x="80" y="110" width="300" height="360"/></svg></div>
+                <div class="ri on"><span class="ind"><svg class="i"><use href="#i-dash"/></svg></span>Dashboard</div>
+                <div class="ri"><span class="ind"><svg class="i"><use href="#i-flow"/></svg></span>Workflows</div>
+                <div class="ri"><span class="ind"><svg class="i"><use href="#i-chat"/></svg><span class="badge">1</span></span>Chat</div>
+                <div class="ri"><span class="ind"><svg class="i"><use href="#i-book"/></svg></span>Knowledge</div>
+                <div class="ri"><span class="ind"><svg class="i"><use href="#i-cap"/></svg></span>Skills</div>
+                <div class="spacer"></div>
+                <div class="ri"><span class="ind"><svg class="i"><use href="#i-gear"/></svg></span>Settings</div>
+              </nav>
+              <div class="main">
+                <div class="statusbar" style="justify-content:flex-end;gap:10px;padding-right:26px"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 8a14 14 0 0 1 18 0l-2 2a11 11 0 0 0-14 0zM7 12a8 8 0 0 1 10 0l-2 2a5 5 0 0 0-6 0zM12 16l2 2-2 2-2-2z"/></svg><svg viewBox="0 0 24 24"><rect x="3" y="7" width="16" height="10" rx="2.5"/><rect x="20" y="10" width="2" height="4" rx="1"/></svg></span><span>9:41</span></div>
+                <div class="dtop">
+                  <h2>Dashboard<small>Tuesday · 3 workflows ran in the last hour</small></h2>
+                  <span class="iconbtn" aria-label="Permissions"><svg class="i"><use href="#i-shield"/></svg></span>
+                  <span class="iconbtn" aria-label="AI settings"><svg class="i"><use href="#i-bot"/></svg></span>
+                </div>
+                <div class="grid">
+                  <!-- Runs -->
+                  <div class="card" tabindex="0">
+                    <div class="ct"><svg class="i"><use href="#i-runs"/></svg>Runs<svg class="i more"><use href="#i-more"/></svg></div>
+                    <div class="seg"><span>Today</span><span class="on">7 days</span></div>
+                    <div class="big" id="cnt-runs" data-to="128">128<small>runs</small></div>
+                    <div class="sub">121 succeeded · 5 failed · 2 waiting</div>
+                    <svg class="spark" viewBox="0 0 300 64" preserveAspectRatio="none" aria-label="Runs per day: 14, 19, 16, 22, 17, 24, 16; failures: 0, 1, 0, 2, 0, 1, 1">
+                      <defs><linearGradient id="sparkfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0B6B61" stop-opacity=".18"/><stop offset="1" stop-color="#0B6B61" stop-opacity="0"/></linearGradient></defs>
+                      <path class="area" d="M4 36 L52 20 L100 28 L148 10 L196 25 L244 4 L296 28 L296 64 L4 64 Z"/>
+                      <path class="tot" d="M4 36 L52 20 L100 28 L148 10 L196 25 L244 4 L296 28"/>
+                      <path class="fail" d="M4 62 L52 58 L100 62 L148 54 L196 62 L244 58 L296 58"/>
+                    </svg>
+                    <div class="legend"><span><i style="background:var(--primary)"></i>all runs</span><span><i style="background:var(--sig-failed)"></i>failed</span></div>
+                  </div>
+                  <!-- AI usage -->
+                  <div class="card" tabindex="0">
+                    <div class="ct"><svg class="i"><use href="#i-spark"/></svg>AI usage<svg class="i more"><use href="#i-more"/></svg></div>
+                    <div class="seg"><span>Today</span><span class="on">7 d</span><span>30 d</span></div>
+                    <div class="big" id="cnt-calls" data-to="342">342<small>calls · 1.2M tokens · $0.84</small></div>
+                    <div>
+                      <div class="urow"><b>MiniMax · M2.7</b><span class="cost">$0.61</span><span class="num">298 calls · in 980k · out 210k · cached 410k</span></div>
+                      <div class="urow"><b>Claude · opus-5</b><span class="cost">$0.23</span><span class="num">44 calls · in 61k · out 18k</span></div>
+                    </div>
+                    <div class="mchips"><span>node 214</span><span>chat 118</span><span>builder 10</span></div>
+                  </div>
+                  <!-- Chat -->
+                  <div class="card" tabindex="0">
+                    <div class="ct"><svg class="i"><use href="#i-chat"/></svg>Chat<svg class="i more"><use href="#i-more"/></svg></div>
+                    <div class="big">6<small>conversations</small></div>
+                    <div><span class="pill tone-caution"><span class="dot"></span>1 awaiting approval</span></div>
+                    <div class="rows">
+                      <div class="wr"><span class="sd" style="background:var(--sig-suspended)"></span><span class="nm">Morning digest keeps failing</span><span class="meta">2 min</span></div>
+                      <div class="wr"><span class="sd" style="background:var(--sig-success)"></span><span class="nm">Build: commute playlist</span><span class="meta">1 h</span></div>
+                      <div class="wr"><span class="sd" style="background:var(--sig-cancelled)"></span><span class="nm">What ran overnight?</span><span class="meta">9 h</span></div>
+                    </div>
+                  </div>
+                  <!-- Workflows -->
+                  <div class="card" tabindex="0">
+                    <div class="ct"><svg class="i"><use href="#i-flow"/></svg>Workflows<svg class="i more"><use href="#i-more"/></svg></div>
+                    <div class="rows">
+                      <div class="wr"><span class="sd" style="background:var(--sig-failed)"></span><span class="nm">Morning digest</span><span class="meta bad">2 failed</span><span class="meta">14 · 3.1 s</span></div>
+                      <div class="wr"><span class="sd" style="background:var(--sig-success)"></span><span class="nm">Photo backup to NAS</span><span class="meta">42 · 8.4 s</span></div>
+                      <div class="wr"><span class="sd" style="background:var(--sig-running)"></span><span class="nm">Commute playlist</span><span class="meta">running…</span></div>
+                      <div class="wr"><span class="sd" style="background:var(--sig-success)"></span><span class="nm">Battery saver at 20 %</span><span class="meta">9 · 0.3 s</span></div>
+                    </div>
+                    <div class="cardfoot"><span class="textbtn">All runs</span></div>
+                  </div>
+                  <!-- Permissions -->
+                  <div class="card" tabindex="0">
+                    <div class="ct"><svg class="i"><use href="#i-shield"/></svg>Permissions</div>
+                    <div class="kv"><span>Mode</span><span class="pill tone-info"><span class="dot"></span>Ask</span></div>
+                    <div class="sub">Safe, coding and destructive actions ask; read-only tools run.</div>
+                    <div class="cardfoot"><button class="pb outline" style="height:40px;min-width:0">Change</button><button class="pb danger-o" style="height:40px;min-width:0">Stop everything</button></div>
+                  </div>
+                  <!-- Host + Knowledge (skeleton) -->
+                  <div class="card" tabindex="0">
+                    <div class="ct"><svg class="i"><use href="#i-host"/></svg>Host &amp; knowledge</div>
+                    <div class="kv"><span>Notification listener</span><span class="pill tone-pos"><span class="dot"></span>connected</span></div>
+                    <div class="kv"><span>Background host</span><b>idle · 0 holds</b></div>
+                    <div class="kv"><span>Knowledge</span><span style="flex:1;margin-left:16px" aria-label="loading"><div class="sk" style="width:100%"></div></span></div>
+                    <div class="sk" style="width:62%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="label-top" style="margin-top:10px">Inset · Bypass variant · light</div>
+      <div class="inset light" role="img" aria-label="Bypass variant: red banner above every screen and the Permissions card in danger tone">
+        <div class="screen light" style="position:relative">
+          <div class="banner"><svg class="i s"><use href="#i-hand"/></svg><span>Bypass mode — nothing asks — expires in <span class="cd" id="cd">57</span> min</span><span class="stop" aria-label="Stop everything and turn off Bypass">Stop</span></div>
+          <div class="body">
+            <div class="card dangerc" style="flex:1">
+              <div class="ct"><svg class="i"><use href="#i-shield"/></svg>Permissions</div>
+              <div class="sub"><b>Bypass active — 57 min left.</b> Deleting workflows, shell, UI automation: nothing asks.</div>
+              <div class="cardfoot"><button class="pb danger" style="height:40px;min-width:0">Stop everything</button></div>
+            </div>
+            <div class="card" style="flex:1">
+              <div class="ct"><svg class="i"><use href="#i-chat"/></svg>This chat</div>
+              <div><span class="pill tone-danger"><span class="dot"></span>Bypass · 57m</span></div>
+              <div class="sub">Turning Bypass on always opens the confirmation dialog first.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Motion legend ================= -->
+  <h3 class="sec">Motion legend</h3>
+  <p class="sec">Real tokens from DESIGN6 §3 (CSS approximates the springs). With <b>Reduce motion</b> on — in Mahout's settings or Android's <i>Remove animations</i> — each of these renders its final static frame, exactly like below when you tick the box or when your OS asks for reduced motion.</p>
+  <div class="legendbar">
+    <button class="btn-page" id="replay" type="button">Replay animations</button>
+    <label class="rm"><input type="checkbox" id="rm"> Simulate reduced motion</label>
+  </div>
+  <div class="tiles" id="tiles">
+    <div class="tile">
+      <h5>Streaming caret</h5>
+      <div class="demo dark" style="background:var(--bg)"><div class="d-caret">Raising the timeout to 60 s<span class="caret"></span></div></div>
+      <div class="tok"><span>CARET_MS 1000</span><span>fade 120</span><span>graphicsLayer α</span></div>
+      <p>Blinks without recomposing the text; solid when reduced.</p>
+    </div>
+    <div class="tile">
+      <h5>Message entry</h5>
+      <div class="demo dark d-entry" style="background:var(--bg)">
+        <div class="b u">Fix it if it's safe.</div>
+        <div class="b t"><svg class="glyph" style="width:16px;height:16px"><use href="#g-done"/></svg>get_workflow</div>
+        <div class="b a">The HTTP step timed out at 30 s…</div>
+      </div>
+      <div class="tok"><span>MEDIUM1 220</span><span>decelerate</span><span>rise 12dp</span><span>stagger 35</span></div>
+      <p>animateItem fade + rise; the live→stored handoff is instant.</p>
+    </div>
+    <div class="tile">
+      <h5>Card press</h5>
+      <div class="demo light d-press" style="background:var(--bg)">
+        <div class="card" tabindex="0"><div class="ct"><svg class="i"><use href="#i-runs"/></svg>Runs</div><div class="big" style="font-size:26px;line-height:30px">128<small>runs</small></div></div>
+      </div>
+      <div class="tok"><span>PRESS_SCALE 0.97</span><span>spatialFast 0.9/900</span></div>
+      <p>Press and hold any dashboard card above to feel it.</p>
+    </div>
+    <div class="tile">
+      <h5>Approval dock</h5>
+      <div class="demo dark d-sheet" style="background:var(--bg)">
+        <div class="mini"><div class="h">Wants to run run_shell</div><div class="bb"><span style="background:var(--primary);color:var(--on-primary)">Approve</span><span style="box-shadow:inset 0 0 0 1px var(--outline);color:var(--on)">Deny</span></div></div>
+      </div>
+      <div class="tok"><span>MEDIUM2 300</span><span>emphasis 0.72/380</span><span>haptic CONFIRM</span></div>
+      <p>Slides up over the composer with a ~3 % settle.</p>
+    </div>
+    <div class="tile">
+      <h5>Tool status morph</h5>
+      <div class="demo dark d-glyph" style="background:var(--bg)">
+        <div class="gl">
+          <div class="g1"><svg width="44" height="44"><use href="#g-pending"/></svg></div>
+          <div class="g2"><svg width="44" height="44"><use href="#g-run"/></svg></div>
+          <div class="g3"><svg width="44" height="44"><use href="#g-done"/></svg></div>
+        </div>
+        <div class="glabel"><span>queued</span><span>running · 1.2 s</span><span>done · 2.4 s</span></div>
+      </div>
+      <div class="tok"><span>spatialFast</span><span>crossfade 150</span><span>tick 250ms</span></div>
+      <p>Pending → running → done; always paired with words.</p>
+    </div>
+  </div>
+
+  <!-- ================= Tokens ================= -->
+  <h3 class="sec">Tokens at a glance</h3>
+  <p class="sec">Contrast numbers are WCAG 2.x ratios of the role's text pair (DESIGN6 §2). Signal colours are tuned to one luminance so each works as a dot or stripe on both paper and night.</p>
+  <div class="tokgrid">
+    <div class="panel">
+      <h5>Colour roles — light / dark</h5>
+      <div class="sw" id="swatches"></div>
+      <h5 style="margin-top:18px">Signal (non-text, both themes)</h5>
+      <div class="sw" id="signals"></div>
+    </div>
+    <div class="panel">
+      <h5>Type — Manrope · JetBrains Mono</h5>
+      <div class="typespec">
+        <div><small>displaySmall 36/44</small><span style="font:600 32px/40px var(--font);letter-spacing:-.5px">Automations you steer</span></div>
+        <div><small>titleLarge 22/28</small><span style="font:700 22px/28px var(--font)">Morning digest</span></div>
+        <div><small>bodyLarge 16/24</small><span style="font:400 16px/24px var(--font)">The feed moved to a new address.</span></div>
+        <div><small>labelMedium 12/16</small><span style="font:600 12px/16px var(--font);letter-spacing:.4px">SAFE ACTION · ASKS (ASK)</span></div>
+        <div><small>code 13/20</small><span style="font:400 13px/20px var(--mono)">"timeoutMs": 60000</span></div>
+        <div><small>numeric (tnum)</small><span style="font:700 28px/36px var(--font);font-variant-numeric:tabular-nums">1,208 · 342</span></div>
+      </div>
+      <h5 style="margin-top:18px">Spacing 2·4·8·12·16·24·32·48 &nbsp;/&nbsp; Radius 6·10·16·24·32</h5>
+      <div class="scale"><div style="height:2px"></div><div style="height:4px"></div><div style="height:8px"></div><div style="height:12px"></div><div style="height:16px"></div><div style="height:24px"></div><div style="height:32px"></div><div style="height:48px"></div></div>
+      <div class="radii"><div style="border-radius:6px"></div><div style="border-radius:10px"></div><div style="border-radius:16px"></div><div style="border-radius:24px"></div><div style="border-radius:32px"></div></div>
+    </div>
+  </div>
+  <div class="foot">Static preview. Fonts load from Google Fonts when online (system fallback otherwise); everything else is inline. Source of truth: docs/DESIGN6.md.</div>
+</div>
+
+<script>
+(function(){
+  // swatches (values mirror DESIGN6 §2.1–2.3)
+  var roles=[
+    ['primary','#0B6B61','#7FD1C5','#FFFFFF','#00332D','6.38 / 7.83'],
+    ['primaryContainer','#C4EEE6','#0F4F48','#00201C','#A9F0E4','13.67 / 7.29'],
+    ['secondaryContainer','#F6E7C8','#4D3B10','#2B1F00','#F6E7C8','13.23 / 8.82'],
+    ['surface','#F7F4EC','#0A1722','#0F2A3F','#E4ECF0','13.42 / 15.15'],
+    ['surfaceContainerHigh','#E6E3D9','#172B3C','#0F2A3F','#E4ECF0','11.49 / 12.13'],
+    ['errorContainer','#FADAD6','#8C1D18','#410E0B','#FFDAD6','12.43 / 7.05'],
+    ['userBubble','#0F2A3F','#1F4A55','#F6E7C8','#F6E7C8','12.07 / 7.92'],
+    ['codeBg','#132A3A','#06111A','#E4ECF0','#D5E1E8','12.36 / 14.29'],
+    ['riskWrite','#D9E4F7','#1B355C','#0B2350','#D9E4F7','11.96 / 9.58'],
+    ['riskCoding','#FBE3B3','#4D3700','#4A3000','#FBE3B3','9.77 / 8.99'],
+    ['riskAlways','#FADAD6','#5C1A16','#5F1410','#FFDAD6','10.08 / 10.07'],
+    ['successContainer','#CDEFD9','#12432C','#04311C','#CDEFD9','11.60 / 9.09']
+  ];
+  var sw=document.getElementById('swatches');
+  roles.forEach(function(r){
+    var d=document.createElement('div'); d.className='swatch';
+    d.innerHTML='<div style="display:flex"><div class="c" style="flex:1;background:'+r[1]+';color:'+r[3]+'">Aa</div><div class="c" style="flex:1;background:'+r[2]+';color:'+r[4]+'">Aa</div></div><div class="m"><b>'+r[0]+'</b>'+r[1]+' / '+r[2]+'<br>'+r[5]+'</div>';
+    sw.appendChild(d);
+  });
+  var sig=[['running','#3B7AC8'],['success','#298957'],['failed','#D14B44'],['suspended','#A26F0F'],['cancelled','#6D7B85'],['logic','#8666CF']];
+  var sg=document.getElementById('signals');
+  sig.forEach(function(s){
+    var d=document.createElement('div'); d.className='swatch';
+    d.innerHTML='<div style="display:flex;height:54px"><div style="flex:1;background:#F7F4EC;display:grid;place-items:center"><span style="width:16px;height:16px;border-radius:99px;background:'+s[1]+'"></span></div><div style="flex:1;background:#0A1722;display:grid;place-items:center"><span style="width:16px;height:16px;border-radius:99px;background:'+s[1]+'"></span></div></div><div class="m"><b>'+s[0]+'</b>'+s[1]+'<br>≥ 3.3 : 1 both</div>';
+    sg.appendChild(d);
+  });
+
+  var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // rolling counters (AnimatedCounter, LONG2 600 ms, standard easing); static when reduced
+  function count(el){
+    var to=+el.dataset.to, small=el.querySelector('small'), node=el.firstChild;
+    if(reduced||document.body.classList.contains('reduced')){node.nodeValue=String(to);return}
+    var t0=null, dur=600;
+    function ease(x){ // cubic-bezier(.2,0,0,1) approximation
+      return 1-Math.pow(1-x,3.2);
+    }
+    function f(ts){ if(!t0)t0=ts; var p=Math.min(1,(ts-t0)/dur); node.nodeValue=String(Math.round(to*ease(p))); if(p<1)requestAnimationFrame(f) }
+    requestAnimationFrame(f);
+  }
+  var counters=[document.getElementById('cnt-runs'),document.getElementById('cnt-calls')];
+  counters.forEach(count);
+
+  function replay(){
+    var els=document.querySelectorAll('.spark path,.dock,.slash,.d-entry .b,.d-press .card,.d-sheet .mini,.gl>*,.glabel span');
+    els.forEach(function(e){ e.style.animation='none'; void e.offsetWidth; e.style.animation=''; });
+    counters.forEach(count);
+  }
+  document.getElementById('replay').addEventListener('click',replay);
+  document.getElementById('rm').addEventListener('change',function(e){
+    document.body.classList.toggle('reduced',e.target.checked); replay();
+  });
+})();
+</script>
+</body>
+</html>

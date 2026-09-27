@@ -1,0 +1,4 @@
+data: {"id":"t1","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[{"index":0,"delta":{"role":"assistant","content":"This answer is cut"},"finish_reason":null}]}
+
+data: {"id":"t1","object":"chat.completion.chunk","created":1,"model":"gpt-6-sol","choices":[{"index":0,"delta":{"content":" off mid"},"finish_reason":null}]}
+

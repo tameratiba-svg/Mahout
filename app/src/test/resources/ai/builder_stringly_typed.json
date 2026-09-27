@@ -1,0 +1,1 @@
+{"name":"Stringly","nodes":[{"id":"n1","type":"trigger.manual","name":"Run","params":{}},{"id":"n2","type":"data.http","name":"Fetch","params":{"url":"https://x","timeout":"12","json":"true","tags":"a","delay":"250","bogus":1,"body":null}}],"edges":[{"from":"n1","fromPort":"","to":"n2","toPort":""}]}

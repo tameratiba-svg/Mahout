@@ -1,0 +1,12 @@
+data: {"id":"ds1","object":"chat.completion.chunk","created":1,"model":"deepseek-reasoner","choices":[{"index":0,"delta":{"role":"assistant","content":null,"reasoning_content":""},"finish_reason":null}]}
+
+data: {"id":"ds1","object":"chat.completion.chunk","created":1,"model":"deepseek-reasoner","choices":[{"index":0,"delta":{"content":null,"reasoning_content":"First, "},"finish_reason":null}]}
+
+data: {"id":"ds1","object":"chat.completion.chunk","created":1,"model":"deepseek-reasoner","choices":[{"index":0,"delta":{"content":null,"reasoning_content":"check."},"finish_reason":null}]}
+
+data: {"id":"ds1","object":"chat.completion.chunk","created":1,"model":"deepseek-reasoner","choices":[{"index":0,"delta":{"content":"Done","reasoning_content":null},"finish_reason":null}]}
+
+data: {"id":"ds1","object":"chat.completion.chunk","created":1,"model":"deepseek-reasoner","choices":[{"index":0,"delta":{"content":"."},"finish_reason":"stop"}],"usage":{"prompt_tokens":15,"completion_tokens":9,"total_tokens":24,"prompt_cache_hit_tokens":5,"prompt_cache_miss_tokens":10}}
+
+data: [DONE]
+

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <!-- Mahout mark: elephant head in profile, trunk carrying a three-node workflow (docs/brand/mahout-logo.svg). 512-unit art, scale 0.13,
+         translate = 54 - 0.13 * ink centre (228, 289) -> ink centred, 35 x 48 dp (half-diagonal 30 dp) inside the 66 dp safe zone. -->
+    <group android:scaleX="0.13" android:scaleY="0.13" android:translateX="24.4" android:translateY="16.4">
+        <!-- ear (behind the head) -->
+        <path android:fillColor="#FFEFD599" android:fillAlpha="0.92" android:pathData="M212,150 C150,118 96,150 92,214 C88,280 132,330 196,318 C214,314 224,300 226,284 L226,176 Z" />
+        <!-- head -->
+        <path android:fillColor="#FFEFD599" android:pathData="M180,196 a92,92 0 1,0 184,0 a92,92 0 1,0 -184,0 Z" />
+        <!-- forehead notch to the trunk root -->
+        <path android:fillColor="#FFEFD599" android:pathData="M312,268 C338,262 352,250 356,240 L356,296 C356,312 344,320 330,318 L300,300 Z" />
+        <!-- trunk -->
+        <path android:strokeColor="#FFEFD599" android:strokeWidth="44" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M332,292 C336,330 330,366 312,396 C296,422 296,446 322,452" />
+        <!-- tusk -->
+        <path android:strokeColor="#FFFFFFFF" android:strokeAlpha="0.9" android:strokeWidth="12" android:strokeLineCap="round" android:pathData="M262,286 C270,306 288,316 306,314" />
+        <!-- eye -->
+        <path android:fillColor="#FF0F2A3F" android:pathData="M285,184 a15,15 0 1,0 30,0 a15,15 0 1,0 -30,0 Z" />
+        <path android:fillColor="#FFF6E7C8" android:pathData="M302,179 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0 Z" />
+        <!-- workflow riding the trunk: edges (dark outline, then teal) -->
+        <path android:strokeColor="#FF0F2A3F" android:strokeWidth="12" android:strokeLineCap="round" android:pathData="M334,322 L320,380 M320,380 L344,434" />
+        <path android:strokeColor="#FF7FD1C5" android:strokeWidth="6" android:strokeLineCap="round" android:pathData="M334,322 L320,380 M320,380 L344,434" />
+        <!-- nodes -->
+        <path android:fillColor="#FF7FD1C5" android:strokeColor="#FF0F2A3F" android:strokeWidth="6" android:pathData="M318,322 a16,16 0 1,0 32,0 a16,16 0 1,0 -32,0 Z" />
+        <path android:fillColor="#FF7FD1C5" android:strokeColor="#FF0F2A3F" android:strokeWidth="6" android:pathData="M304,380 a16,16 0 1,0 32,0 a16,16 0 1,0 -32,0 Z" />
+        <path android:fillColor="#FF7FD1C5" android:strokeColor="#FF0F2A3F" android:strokeWidth="6" android:pathData="M328,434 a16,16 0 1,0 32,0 a16,16 0 1,0 -32,0 Z" />
+        <!-- reins: ear -> first node. ponytail: reins drawn solid at 55 % (VectorDrawable has no dash array); upgrade = dotted path -->
+        <path android:strokeColor="#FF7FD1C5" android:strokeAlpha="0.55" android:strokeWidth="6" android:strokeLineCap="round" android:pathData="M150,300 C210,330 270,330 318,322" />
+    </group>
+</vector>

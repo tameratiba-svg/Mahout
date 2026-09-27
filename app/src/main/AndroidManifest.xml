@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ===== normal permissions ===== -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <!-- ===== runtime (dangerous) permissions: requested lazily per node gate ===== -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />                    <!-- 33+, onboarding -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />                  <!-- location node, SSID, geofence -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />            <!-- OPTIONAL: geofence reliability -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />                     <!-- 31+: BT device names, enable request -->
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />                        <!-- OPTIONAL: silent calendar insert -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />                      <!-- OPTIONAL: call trigger -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />                           <!-- OPTIONAL, flagged: SMS trigger -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />                     <!-- 33+ -->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />                      <!-- 33+ -->
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />                      <!-- 33+; data.media_list kind=videos (integration deviation, same dialog as IMAGES) -->
+    <!-- 34+: 'Select photos' partial access alongside READ_MEDIA_IMAGES/VIDEO; lets the Permissions screen show 'Partial access' instead of a bare denial (trigger.new_photo, data.media_list) -->
+    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />                  <!-- OPTIONAL: step sensor 29+ -->
+    <uses-permission android:name="android.permission.NFC" />                                   <!-- OPTIONAL -->
+    <!-- ===== special access (granted via Settings screens, not runtime dialogs) ===== -->
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />            <!-- DND -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions" />  <!-- brightness/rotate/timeout -->
+    <!-- 'Display over other apps' (Gate.Overlay, optional): the Android 10+ background-activity-start exemption for launch_app / open_url / share / navigate /
+         dial / compose_* / add_contact / set_alarm / send_intent / settings_panel / add_calendar_event / app.action when no Mob8N window is visible and the
+         UI-automation binding is off. Granted via Settings.ACTION_MANAGE_OVERLAY_PERMISSION; Mob8N never draws anything. Without it the 'Tap to open' trampoline is used. -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- NOT requested on purpose (CatalogGatesTest.neverDeclared asserts these stay out): CALL_PHONE, SEND_SMS, READ_CALL_LOG, RECORD_AUDIO,
+         CAMERA (torch = CameraManager.setTorchMode, needs none), QUERY_ALL_PACKAGES, SCHEDULE_EXACT_ALARM / USE_EXACT_ALARM (setAndAllowWhileIdle needs none),
+         BLUETOOTH_SCAN (trigger.bluetooth only receives ACL broadcasts, no discovery), NEARBY_WIFI_DEVICES (no scan/P2P/hotspot API; the connected SSID stays
+         FINE_LOCATION + location-on gated, plus BACKGROUND_LOCATION from a background host), PACKAGE_USAGE_STATS (unused).
+         v2 (DESIGN2 §8.1): usesCleartextTraffic="true" for Ollama / custom OpenAI-compatible servers on the LAN; the ai lane only accepts http:// base URLs for loopback, *.local and RFC-1918 hosts. -->
+
+    <uses-feature android:name="android.hardware.nfc" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false" />
+    <uses-feature android:name="android.hardware.bluetooth" android:required="false" />
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+    <uses-feature android:name="android.hardware.location" android:required="false" />
+
+    <queries>
+        <intent><action android:name="android.intent.action.MAIN" /><category android:name="android.intent.category.LAUNCHER" /></intent>
+        <intent><action android:name="android.intent.action.SEND" /><data android:mimeType="*/*" /></intent>
+        <intent><action android:name="android.intent.action.VIEW" /><data android:scheme="https" /></intent>
+        <intent><action android:name="android.intent.action.VIEW" /><data android:scheme="geo" /></intent>
+        <intent><action android:name="android.intent.action.SENDTO" /><data android:scheme="mailto" /></intent>
+        <intent><action android:name="android.intent.action.SENDTO" /><data android:scheme="smsto" /></intent>
+        <intent><action android:name="android.intent.action.DIAL" /></intent>
+        <intent><action android:name="android.intent.action.SET_ALARM" /></intent>
+        <intent><action android:name="android.intent.action.TTS_SERVICE" /></intent>
+    </queries>
+
+    <application
+        android:name="com.mob8n.Mob8NApp"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@style/Theme.Mob8N"
+        android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_rules"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:usesCleartextTraffic="true"
+        android:enableOnBackInvokedCallback="true"
+        android:supportsRtl="true">
+
+        <!-- UI shell (scaffold). Deep links: mob8n://run/{runId}, mob8n://workflow/{workflowId}. Static shortcuts meta-data. -->
+        <activity android:name="com.mob8n.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|uiMode|keyboardHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="mob8n" />
+            </intent-filter>
+            <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
+        </activity>
+
+        <!-- Share target + shortcuts + NFC entry (triggers lane). Translucent, finishes immediately. -->
+        <activity android:name="com.mob8n.triggers.EntryActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:label="@string/share_target_label">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/*" />
+                <data android:mimeType="image/*" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.mob8n.SHORTCUT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED" />
+            </intent-filter>
+            <meta-data android:name="android.nfc.action.TECH_DISCOVERED" android:resource="@xml/nfc_tech_filter" />
+            <intent-filter>
+                <action android:name="android.nfc.action.TAG_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- Always-on host #1 (triggers lane) -->
+        <service android:name="com.mob8n.triggers.NotifListener"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter><action android:name="android.service.notification.NotificationListenerService" /></intent-filter>
+        </service>
+
+        <!-- Host #2: specialUse FGS (engine lane) -->
+        <service android:name="com.mob8n.engine.HostService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="User-authored on-device automations: runtime broadcast receivers, sensors, LAN webhook listener and long-running workflow steps that the user explicitly enabled." />
+        </service>
+
+        <!-- Host #3 while enabled (apps lane, DESIGN2 §8.1): idle AccessibilityService for the app.ui_* / app.launch_wait nodes.
+             Bound by the system via BIND_ACCESSIBILITY_SERVICE after the user enables it in Settings > Accessibility. -->
+        <service android:name="com.mob8n.apps.UiAutomationService"
+            android:exported="true"
+            android:label="@string/ui_automation_label"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter><action android:name="android.accessibilityservice.AccessibilityService" /></intent-filter>
+            <meta-data android:name="android.accessibilityservice" android:resource="@xml/accessibility_service_config" />
+        </service>
+
+        <!-- Quick Settings tile (triggers lane) -->
+        <service android:name="com.mob8n.triggers.QsTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_tile"
+            android:label="@string/tile_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter><action android:name="android.service.quicksettings.action.QS_TILE" /></intent-filter>
+            <meta-data android:name="android.service.quicksettings.ACTIVE_TILE" android:value="false" />
+        </service>
+
+        <!-- Exempt system broadcasts ONLY (triggers lane; ManifestReceiverTest enforces the allow-list). goAsync() + host.fire.
+             POWER_CONNECTED/DISCONNECTED, BATTERY_LOW/OKAY and PACKAGE_* are not implicit-broadcast exempt on API 26+: runtime receivers (K1/F17/F18). -->
+        <receiver android:name="com.mob8n.triggers.SystemReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+                <action android:name="android.intent.action.PHONE_STATE" />
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Exact schedules: AlarmManager.setAndAllowWhileIdle target (triggers lane). exported=false: only our own PendingIntents. -->
+        <receiver android:name="com.mob8n.triggers.AlarmReceiver" android:exported="false" />
+
+        <!-- Geofence: LocationManager.addProximityAlert PendingIntent target (triggers lane, action com.mob8n.PROXIMITY). exported=false. -->
+        <receiver android:name="com.mob8n.triggers.ProximityReceiver" android:exported="false" />
+
+        <!-- Approval / timer notification buttons (engine lane). extras: runId, decision -->
+        <receiver android:name="com.mob8n.engine.ApprovalReceiver" android:exported="false" />
+
+        <!-- Post-Notification action buttons -> fire another workflow (actions lane). extras: workflowId, nodeId, label, itemJson -->
+        <receiver android:name="com.mob8n.actions.NotificationActionReceiver" android:exported="false" />
+
+        <!-- Share files from filesDir/cacheDir (actions lane uses authority "com.mob8n.files") -->
+        <provider android:name="androidx.core.content.FileProvider"
+            android:authorities="com.mob8n.files"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
+        </provider>
+
+        <!-- WorkManager: default initializer kept (no custom Configuration). Workers (no manifest entry):
+             com.mob8n.triggers.ScheduleWorker, com.mob8n.triggers.ContentTriggerWorker, com.mob8n.triggers.CalendarScanWorker,
+             com.mob8n.triggers.ChargerWorker, com.mob8n.engine.DelayedRunWorker, com.mob8n.engine.HousekeepingWorker -->
+    </application>
+</manifest>

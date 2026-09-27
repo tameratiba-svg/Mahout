@@ -1,0 +1,1 @@
+{"id":"chatcmpl-1","object":"chat.completion","created":1,"model":"gpt-6-sol-2026","choices":[{"index":0,"message":{"role":"assistant","content":"Hello there","refusal":null,"annotations":[]},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":10,"completion_tokens":5,"total_tokens":15}}

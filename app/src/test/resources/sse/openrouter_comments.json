@@ -1,0 +1,23 @@
+{
+ "id": "gen-1",
+ "object": "chat.completion",
+ "model": "deepseek/deepseek-r2",
+ "choices": [
+  {
+   "index": 0,
+   "message": {
+    "role": "assistant",
+    "content": "Answer: 42",
+    "reasoning": "Thinking hard.",
+    "refusal": null
+   },
+   "finish_reason": "stop"
+  }
+ ],
+ "usage": {
+  "prompt_tokens": 20,
+  "completion_tokens": 6,
+  "total_tokens": 26,
+  "cost": 0.00012
+ }
+}

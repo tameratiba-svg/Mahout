@@ -1,0 +1,1 @@
+{"model": "jev-1.13.0", "answers": {"urgency": {"type": "score", "score": 1.05, "legend": {"0": "low", "1": "medium", "2": "high", "3": "critical"}, "probabilities": {"0": 0.2, "1": 0.55, "2": 0.25, "3": 0.0}, "confidence": 0.61}}, "usage": {"input_tokens": 40, "output_tokens": 1}}

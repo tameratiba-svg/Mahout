@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mahout</string>
+    <string name="share_target_label">Run Mahout workflow</string>
+    <string name="tile_label">Mahout</string>
+    <string name="shortcut_1">Run workflow 1</string>
+    <string name="shortcut_2">Run workflow 2</string>
+    <string name="shortcut_3">Run workflow 3</string>
+    <string name="shortcut_4">Run workflow 4</string>
+    <string name="ui_automation_label">Mahout UI automation</string>
+    <string name="ui_automation_description">Lets Mahout workflows read the screen and tap, type and scroll in other apps only while a UI-automation step runs. Idle otherwise; nothing is recorded except screenshots you explicitly take.</string>
+</resources>

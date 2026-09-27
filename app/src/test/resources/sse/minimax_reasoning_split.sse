@@ -1,0 +1,14 @@
+data: {"id":"mm2","object":"chat.completion.chunk","created":1,"model":"MiniMax-M2.7","choices":[{"index":0,"delta":{"role":"assistant","reasoning_details":[{"type":"reasoning.text","id":"reasoning-text-1","format":"MiniMax-response-v1","index":0,"text":"The user wants"}]},"finish_reason":null}],"base_resp":{"status_code":0,"status_msg":""}}
+
+data: {"id":"mm2","object":"chat.completion.chunk","created":1,"model":"MiniMax-M2.7","choices":[{"index":0,"delta":{"reasoning_details":[{"index":0,"text":" the digest run."}]},"finish_reason":null}],"base_resp":{"status_code":0,"status_msg":""}}
+
+data: {"id":"mm2","object":"chat.completion.chunk","created":1,"model":"MiniMax-M2.7","choices":[{"index":0,"delta":{"content":"Running it"},"finish_reason":null}]}
+
+data: {"id":"mm2","object":"chat.completion.chunk","created":1,"model":"MiniMax-M2.7","choices":[{"index":0,"delta":{"content":" now."},"finish_reason":null}]}
+
+data: {"id":"mm2","object":"chat.completion.chunk","created":1,"model":"MiniMax-M2.7","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"id":"call_function_7","type":"function","function":{"name":"run_workflow","arguments":"{\"name\":"}}]},"finish_reason":null}]}
+
+data: {"id":"mm2","object":"chat.completion.chunk","created":1,"model":"MiniMax-M2.7","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\"Morning digest\"}"}}]},"finish_reason":null}]}
+
+data: {"id":"mm2","object":"chat.completion.chunk","created":1,"model":"MiniMax-M2.7","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":40,"completion_tokens":22,"total_tokens":62,"completion_tokens_details":{"reasoning_tokens":9}},"base_resp":{"status_code":0,"status_msg":""}}
+

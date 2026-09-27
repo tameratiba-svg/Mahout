@@ -1,0 +1,1 @@
+{"id":"g1","object":"chat.completion","model":"gemini-3.8-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"c1","type":"function","function":{"name":"data_http","arguments":"{\"url\":\"https://x\"}"}}]},"finish_reason":"stop"}]}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- DESIGN6 §8.1: window background = Compose `background` (light "paper"), so cold start shows no white flash. -->
+    <color name="mahout_window_bg">#FFF7F4EC</color>
+    <!-- Dark status/nav bar icons on the light window until enableEdgeToEdge() takes over. -->
+    <bool name="mahout_light_bars">true</bool>
+</resources>

@@ -1,0 +1,47 @@
+{
+ "id": "mm2",
+ "object": "chat.completion",
+ "created": 1,
+ "model": "MiniMax-M2.7",
+ "choices": [
+  {
+   "index": 0,
+   "message": {
+    "role": "assistant",
+    "content": "Running it now.",
+    "tool_calls": [
+     {
+      "id": "call_function_7",
+      "type": "function",
+      "function": {
+       "name": "run_workflow",
+       "arguments": "{\"name\":\"Morning digest\"}"
+      }
+     }
+    ],
+    "reasoning_details": [
+     {
+      "type": "reasoning.text",
+      "id": "reasoning-text-1",
+      "format": "MiniMax-response-v1",
+      "index": 0,
+      "text": "The user wants the digest run."
+     }
+    ]
+   },
+   "finish_reason": "tool_calls"
+  }
+ ],
+ "usage": {
+  "prompt_tokens": 40,
+  "completion_tokens": 22,
+  "total_tokens": 62,
+  "completion_tokens_details": {
+   "reasoning_tokens": 9
+  }
+ },
+ "base_resp": {
+  "status_code": 0,
+  "status_msg": ""
+ }
+}

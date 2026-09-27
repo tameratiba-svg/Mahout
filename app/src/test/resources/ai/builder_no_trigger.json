@@ -1,0 +1,1 @@
+{"name":"No trigger","nodes":[{"id":"n1","type":"data.http","name":"Fetch","params":{"url":"https://x"}},{"id":"n2","type":"action.notify","name":"Notify","params":{"title":"t"}}],"edges":[{"from":"n1","fromPort":"main","to":"n2","toPort":"main"}]}

@@ -1,0 +1,1 @@
+{"name":"Unknown","nodes":[{"id":"n1","type":"trigger.manual","name":"Run","params":{}},{"id":"n2","type":"action.notification","name":"Ping","params":{"title":"x"}}],"edges":[{"from":"n1","fromPort":"main","to":"n2","toPort":"main"}]}

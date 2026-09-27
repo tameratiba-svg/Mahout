@@ -1,0 +1,20 @@
+{
+ "id": "mm3",
+ "object": "chat.completion",
+ "model": "MiniMax-M3",
+ "choices": [
+  {
+   "index": 0,
+   "message": {
+    "role": "assistant",
+    "content": "</think>\n\nAll good."
+   },
+   "finish_reason": "stop"
+  }
+ ],
+ "usage": {
+  "prompt_tokens": 8,
+  "completion_tokens": 3,
+  "total_tokens": 11
+ }
+}
