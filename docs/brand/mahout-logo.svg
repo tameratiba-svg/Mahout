@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Mahout logo: an elephant head in profile whose trunk carries a three-node workflow">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0F2A3F"/>
+      <stop offset="1" stop-color="#123C4A"/>
+    </linearGradient>
+    <linearGradient id="ink" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F6E7C8"/>
+      <stop offset="1" stop-color="#E9C46A"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- ear (behind the head) -->
+  <path d="M212 150 C150 118 96 150 92 214 C88 280 132 330 196 318 C214 314 224 300 226 284 L226 176 Z" fill="url(#ink)" opacity="0.92"/>
+  <!-- head -->
+  <circle cx="272" cy="196" r="92" fill="url(#ink)"/>
+  <!-- forehead notch to the trunk root -->
+  <path d="M312 268 C338 262 352 250 356 240 L356 296 C356 312 344 320 330 318 L300 300 Z" fill="url(#ink)"/>
+  <!-- trunk: thick stroke curving down and curling forward -->
+  <path d="M332 292 C336 330 330 366 312 396 C296 422 296 446 322 452" fill="none" stroke="url(#ink)" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- tusk -->
+  <path d="M262 286 C270 306 288 316 306 314" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" opacity="0.9"/>
+  <!-- eye -->
+  <circle cx="300" cy="184" r="15" fill="#0F2A3F"/>
+  <circle cx="306" cy="179" r="4" fill="#F6E7C8"/>
+  <!-- workflow riding the trunk: edges then nodes -->
+  <path d="M334 322 L320 380 M320 380 L344 434" fill="none" stroke="#0F2A3F" stroke-width="12" stroke-linecap="round"/>
+  <path d="M334 322 L320 380 M320 380 L344 434" fill="none" stroke="#7FD1C5" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="334" cy="322" r="16" fill="#7FD1C5" stroke="#0F2A3F" stroke-width="6"/>
+  <circle cx="320" cy="380" r="16" fill="#7FD1C5" stroke="#0F2A3F" stroke-width="6"/>
+  <circle cx="344" cy="434" r="16" fill="#7FD1C5" stroke="#0F2A3F" stroke-width="6"/>
+  <!-- reins: dotted control line from the ear to the first node -->
+  <path d="M150 300 C210 330 270 330 318 322" fill="none" stroke="#7FD1C5" stroke-width="6" stroke-linecap="round" stroke-dasharray="1 14"/>
+</svg>
