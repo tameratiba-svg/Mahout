@@ -123,8 +123,8 @@ Running workflows control (suspend, cancel, resume), background host monitor, se
 ```bash
 # Prerequisites: Android Studio Koala+, Java 17, Gradle 8.7+, NDK (for Room schema export)
 
-git clone https://github.com/ankurCES/Mob8N.git
-cd Mob8N
+git clone https://github.com/ankurCES/Mahout.git
+cd Mahout
 
 # Build & install
 ./build.sh profile   # or debug; or ./gradlew :app:installDebug
