@@ -4,7 +4,7 @@
 
 <h1 align="center">Mahout</h1>
 
-<p align="center"><strong>On-device workflow automation for Android — n8n meets Tasker.</strong></p>
+<p align="center"><strong>Mahout is a fully open-source, on-device, FOSS alternative to <a href="https://tasker.joaoapps.com/">Tasker</a> for Android. On-device workflow automation for Android — n8n meets Tasker.</strong></p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/minSdk-26-0B6B61?logo=android" alt="minSdk 26" />
